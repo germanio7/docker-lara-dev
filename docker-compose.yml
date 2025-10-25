@@ -1,0 +1,70 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./projects:/var/www/html
+    depends_on:
+      - creaciones-ravel
+    networks:
+      - laravel
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: laravel
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - laravel
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    networks:
+      - laravel
+
+  mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    ports:
+      - "8025:8025"
+    networks:
+      - laravel
+
+  proyecto1:
+    build:
+      context: ./php/php83
+    container_name: proyecto1
+    volumes:
+      - ./projects/proyecto1:/var/www/html/proyecto1
+    networks:
+      - laravel
+
+  node-proyecto1:
+    build:
+      context: ./node/node20
+    container_name: node-proyecto1
+    volumes:
+      - ./projects/proyecto1:/var/www/html/proyecto1
+    networks:
+      - laravel
+
+volumes:
+  mysql_data:
+
+networks:
+  laravel:
+    driver: bridge
