@@ -17,7 +17,6 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: laravel
     ports:
       - "3306:3306"
     volumes:
@@ -57,6 +56,8 @@ services:
     build:
       context: ./node/node20
     container_name: node-proyecto1
+    ports:
+      - "5173:5173"
     volumes:
       - ./projects/proyecto1:/var/www/html/proyecto1
     networks:
