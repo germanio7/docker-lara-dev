@@ -7,8 +7,6 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./projects:/var/www/html
-    depends_on:
-      - creaciones-ravel
     networks:
       - laravel
 
@@ -49,8 +47,10 @@ services:
     container_name: proyecto1
     volumes:
       - ./projects/proyecto1:/var/www/html/proyecto1
+    # si debe interactuar con otra app, habilitar network_mode: host
     networks:
       - laravel
+    # network_mode: host
 
   node-proyecto1:
     build:
