@@ -8,4 +8,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+RUN composer global require laravel/installer
+ENV PATH="$PATH:/root/.composer/vendor/bin"
+
 WORKDIR /var/www/html
