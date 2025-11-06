@@ -2,6 +2,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx
+    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
@@ -13,6 +14,7 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: password
     ports:
@@ -25,6 +27,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
+    restart: unless-stopped
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
@@ -40,6 +43,7 @@ services:
   mailpit:
     image: axllent/mailpit
     container_name: mailpit
+    restart: unless-stopped
     ports:
       - "8025:8025"
     networks:
@@ -49,6 +53,7 @@ services:
     build:
       context: ./php/php83
     container_name: proyecto1
+    restart: unless-stopped
     volumes:
       - ./projects/proyecto1:/var/www/html/proyecto1
     # si debe interactuar con otra app, habilitar network_mode: host
@@ -60,6 +65,7 @@ services:
     build:
       context: ./node/node20
     container_name: node-proyecto1
+    restart: unless-stopped
     ports:
       - "5173:5173"
     volumes:
